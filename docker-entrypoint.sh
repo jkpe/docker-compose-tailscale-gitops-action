@@ -40,29 +40,6 @@ DOCKER_HOST=ssh://${INPUT_REMOTE_DOCKER_HOST}:${INPUT_SSH_PORT}
 
 SSH_HOST=${INPUT_REMOTE_DOCKER_HOST#*@}
 
-
-if [ -n "$INPUT_TAILSCALE_SSH" ];
-then
-  echo "Using Tailscale SSH, Skipping Manual SSH key registeration"
-  mkdir -p ~/.ssh
-  eval $(ssh-agent)
-else
-  echo "Registering SSH keys..."
-  # register the private key with the agent, when not using Tailscale
-  mkdir -p ~/.ssh
-  ls ~/.ssh
-  printf '%s\n' "$INPUT_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-  chmod 600 ~/.ssh/id_rsa
-  printf '%s\n' "$INPUT_SSH_PUBLIC_KEY" > ~/.ssh/id_rsa.pub
-  chmod 600 ~/.ssh/id_rsa.pub
-  #chmod 600 "~/.ssh"
-  eval $(ssh-agent)
-  ssh-add ~/.ssh/id_rsa
-fi
-
-echo "Add known hosts"
-ssh-keyscan -p $INPUT_SSH_PORT "$SSH_HOST" >> ~/.ssh/known_hosts
-ssh-keyscan -p $INPUT_SSH_PORT "$SSH_HOST" >> /etc/ssh/ssh_known_hosts
 # set context
 echo "Create docker context"
 docker context create remote --docker "host=ssh://$INPUT_REMOTE_DOCKER_HOST:$INPUT_SSH_PORT"
