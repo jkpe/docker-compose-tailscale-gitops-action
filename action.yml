@@ -27,6 +27,9 @@ inputs:
   post_upload_command:
     description: sets command to run post upload, useful to fix permission issues in configuration files
     required: false
+  post_up_command:
+    description: sets command to run post docker compose up
+    required: false
   docker_compose_directory:
     description: specifies which directory to upload, needed for upload_directory
     required: false

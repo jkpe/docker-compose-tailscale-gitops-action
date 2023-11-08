@@ -79,3 +79,9 @@ else
   echo "Command: docker compose -f ${INPUT_COMPOSE_FILE_PATH} ${INPUT_ARGS}"
   docker compose -f ${INPUT_COMPOSE_FILE_PATH} ${INPUT_ARGS}
 fi
+
+if [ -n "$INPUT_POST_UP_COMMAND" ];
+then
+  echo "Healthcheck $INPUT_POST_UP_COMMAND"
+  ssh -o StrictHostKeyChecking=no "$INPUT_REMOTE_DOCKER_HOST" -p "$INPUT_SSH_PORT" "eval $INPUT_POST_UP_COMMAND"
+fi
