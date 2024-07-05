@@ -1,4 +1,4 @@
-FROM docker:24.0.7-cli
+FROM docker:27.0.3-cli
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
