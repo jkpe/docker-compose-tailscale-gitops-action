@@ -73,7 +73,7 @@ then
   echo "Command: docker ${INPUT_ARGS} stack deploy --compose-file ${INPUT_COMPOSE_FILE_PATH}"
   docker ${INPUT_ARGS} stack deploy --compose-file ${INPUT_COMPOSE_FILE_PATH}
 else
-  echo "Command: docker compose -f ${INPUT_COMPOSE_FILE_PATH} pull"
+  echo "Command: docker compose --env-file /root/docker-compose.env -f ${INPUT_COMPOSE_FILE_PATH} pull"
   docker compose -f ${INPUT_COMPOSE_FILE_PATH} pull
 
   echo "Command: docker compose -f ${INPUT_COMPOSE_FILE_PATH} ${INPUT_ARGS}"
